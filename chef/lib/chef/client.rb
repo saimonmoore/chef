@@ -206,6 +206,7 @@ class Chef
         "openid_identifier" => "#{Chef::Config[:openid_url]}/openid/server/node/#{@safe_name}",
         "submit" => "Verify"
       })
+      Chef::Log.debug("After authenticating #{@safe_name} via openid got response: #{response.inspect}") 
       @rest.post_rest(
         "#{Chef::Config[:openid_url]}#{response["action"]}",
         { "password" => @secret }
