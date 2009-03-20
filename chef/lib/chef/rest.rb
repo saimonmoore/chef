@@ -169,6 +169,7 @@ class Chef
       # TODO - Figure out how to test this block - I really have no idea how 
       # to do it without actually calling http.request... 
       begin
+        req.basic_auth(url.user, url.password) if url.user && url.password
         res = http.request(req) do |response|
           if raw
             tf = Tempfile.new("chef-rest") 
