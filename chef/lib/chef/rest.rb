@@ -206,7 +206,7 @@ class Chef
         raise Timeout::Error, "Timeout connecting to #{url.host}:#{url.port} for #{req.path}, giving up"
       end
       
-      Chef::Log.debug("Got result #{res.inspect} content-type: #{res['content-type']} body: #{res.body}") 
+      # Chef::Log.debug("Got result #{res.inspect} content-type: #{res['content-type']} body: #{res.body}") 
       if res.kind_of?(Net::HTTPSuccess)
         if res['set-cookie']
           @cookies["#{url.host}:#{url.port}"] = res['set-cookie']
@@ -224,10 +224,10 @@ class Chef
         if res['set-cookie']
           @cookies["#{url.host}:#{url.port}"] = res['set-cookie']
         end
-        Chef::Log.debug("Re running request GET url: #{create_url(res['location'])} raw: #{raw}") 
+        # Chef::Log.debug("Re running request GET url: #{create_url(res['location'])} raw: #{raw}") 
         run_request(:GET, create_url(res['location']), false, limit - 1, raw)
       else
-        Chef::Log.debug("Results error: #{res.inspect}") 
+        # Chef::Log.debug("Results error: #{res.inspect}") 
         res.error!
       end
     end
