@@ -56,6 +56,7 @@ class ChefServerSlice::OpenidRegister < ChefServerSlice::Application
     @registered_node = Chef::OpenIDRegistration.new
     @registered_node.name = params[:id]
     @registered_node.set_password(params[:password])
+    Chef::Log.debug("Chef::Config[:validation_token]: #{Chef::Config[:validation_token]} params[:validation_token]: #{params[:validation_token]} params: #{params.inspect}")
     if Chef::Config[:validation_token]
       if params[:validation_token] == Chef::Config[:validation_token]
         @registered_node.validated = true
@@ -66,6 +67,7 @@ class ChefServerSlice::OpenidRegister < ChefServerSlice::Application
       @registered_node.validated = false
     end
     @registered_node.save
+    Chef::Log.debug("@registered_node: #{@registered_node.inspect}")
     display @registered_node
   end
   

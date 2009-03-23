@@ -149,6 +149,7 @@ EOS
       identity = oidreq.identity
       identity =~ /node\/(.+)$/
       openid_node = Chef::OpenIDRegistration.load($1)
+      Chef::Log.debug("#decision openid_node: #{openid_node.inspect} json:  #{openid_node.to_json}")
       unless openid_node.validated
         raise Unauthorized, "This nodes registration has not been validated"
       end
