@@ -192,6 +192,7 @@ class Chef
     def create_registration
       @secret = random_password(500)
       Chef::FileCache.store(File.join("registration", @safe_name), @secret)
+      Chef::Log.debug("Creating registration #{@safe_name} via openid with: validation_token: #{@validation_token}")
       @rest.post_rest("registrations", { :id => @safe_name, :password => @secret, :validation_token => @validation_token })
       true
     end
@@ -201,7 +202,7 @@ class Chef
     # === Returns
     # true:: Always returns true
     def authenticate
-      Chef::Log.debug("Authenticating #{@safe_name} via openid") 
+      Chef::Log.debug("Authenticating #{@safe_name} via openid")
       response = @rest.post_rest('openid/consumer/start', { 
         "openid_identifier" => "#{Chef::Config[:openid_url]}/openid/server/node/#{@safe_name}",
         "submit" => "Verify"
