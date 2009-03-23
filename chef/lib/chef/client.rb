@@ -170,7 +170,7 @@ class Chef
       @registration = nil
       begin
         @registration = @rest.get_rest("registrations/#{@safe_name}")
-        Chef::Log.debug("Got registration: #{@registration}") 
+        Chef::Log.debug("Got registration: #{@registration.inspect}: #{@registration.to_json}") 
       rescue Net::HTTPServerException => e
         unless e.message =~ /^404/
           raise e
